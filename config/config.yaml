@@ -1,0 +1,21 @@
+# Runtime parameters loaded separately from the static agent manifest.
+max_retry: 3
+timeout_seconds: 30
+
+# HITL plan-review loop (docs/02_design.md, ADR-016 D5):
+# memory_enabled is mandatory with hitl.enabled because interrupt() requires a
+# checkpointer for pause/resume.
+memory_enabled: true
+hitl:
+  enabled: true
+  max_hitl: 8
+max_revisions: 8
+
+# Hybrid past-plan KB (DB system-of-record + derived vector index).
+kb:
+  top_k: 5
+
+# No offline fallback: a missing or invalid provider fails at startup.
+# Credentials are supplied via the runtime secrets store, never here.
+llm:
+  provider: "anthropic"

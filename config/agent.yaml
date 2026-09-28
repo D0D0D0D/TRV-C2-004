@@ -1,0 +1,26 @@
+# Agent Manifest — AgentRegistry entry point
+# AgentRegistry reads these keys at the root level.
+id: "TRV-C2-004"
+name: "Accommodation Plan Generation & Branding Agent"
+namespace: "trv"
+version: "1.0.0"
+enabled: true
+category: "Cat 2"
+generation_mode: "llm"
+industry: "TRV"
+
+# Conceptual pattern (Cat 2 DocGen + inner past-plan RAG). The implementation
+# inherits AgentBaseGraph directly (L1) with a GraphNode wrapping the inner
+# PlanBrandingWorkflowGraph — NOT a literal DocGenerationAgent base.
+base_type: "AgentBaseGraph"
+
+# Entry point — class MUST match the exported class in src/graph/graph.py.
+class: "src.graph.graph.AccommodationPlanBrandingAgent"
+
+# Security
+required_trust_level: "VERIFIED_EXTERNAL"
+
+# Compile-time dependencies used by the implementation.
+requires:
+  secrets: []
+  extras: ["anthropic"]
